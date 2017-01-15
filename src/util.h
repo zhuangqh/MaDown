@@ -4,7 +4,7 @@
 
 namespace md {
 
-  using CharStream = std::function<char()>;
+  using CharStream = std::function<int()>;
 
   template<typename T, typename... Args>
   std::unique_ptr<T> make_unique(Args&&... args) {
