@@ -4,7 +4,7 @@
 
 namespace md {
 
-  const std::string keyChars = "-*#![ ";
+  const std::string keyChars = "-*#![]() ";
 
   std::map<std::string, Token> tokenTable {
       {"# ", TOK_H1},
@@ -52,8 +52,8 @@ namespace md {
     }
 
     while (nextChar != '\n' && !is_key_char(nextChar)) {
-      strBuffer += curChar;
       next();
+      strBuffer += curChar;
     }
 
     return TOK_TEXT;

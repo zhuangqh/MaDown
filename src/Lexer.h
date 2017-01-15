@@ -21,8 +21,8 @@ namespace md {
       nextChar = CharInStream();
     }
 
-    char curChar;
-    char nextChar;
+    int curChar;
+    int nextChar;
     std::string strBuffer;
 
     int get_token();
