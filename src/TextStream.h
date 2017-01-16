@@ -46,5 +46,9 @@ namespace md {
       FILE *stream_;
     };
 
+    bool read_str_from_file(const std::string &path, std::string &res);
+
+    bool write_str_to_file(const std::string &path, const std::string &str);
+
   } // namespace io
 } // namespace md
