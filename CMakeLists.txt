@@ -20,3 +20,7 @@ set(SOURCE_FILES
         )
 
 add_library(MaDown ${SOURCE_FILES})
+
+set(EXAMPLE example/main.cpp)
+
+add_executable(example ${SOURCE_FILES} ${EXAMPLE})
