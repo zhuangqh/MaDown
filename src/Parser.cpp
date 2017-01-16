@@ -148,11 +148,11 @@ namespace md {
   unique_ptr<STNode> Parser::parse_image() {
     string text, link;
 
-    string strBuf = strBuf;
+    string strBuf = strBuffer;
 
     auto step = [&]() {
       next_token();
-      strBuf += strBuf;
+      strBuf += strBuffer;
     };
 
     step();
