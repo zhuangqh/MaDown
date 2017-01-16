@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include <functional>
+#include <regex>
 #include "TextStream.h"
 #include "Parser.hpp"
 #include "Render.h"
@@ -11,31 +12,46 @@ using namespace std;
 
 namespace md {
 
-  string HTMLPrefix =
-      string("<html>\n") +
-      "  <head>\n" +
-      "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n" +
-      "    <meta charset=\"utf-8\">\n" +
-      "  </head>\n" +
-      "  <body>\n";
+  class Madown {
+  public:
+    string theme;
 
-  string HTMLPostfix =
-      string("  </body>\n") +
-      "</html>";
+    Madown(const string &t) : theme(t) {}
 
-  template<typename Stream>
-  string render(Stream &s) {
-    Parser parser([&s]() -> int {return s.get_char();});
-    Render *render = new Render();
+    Madown() : theme("base") {}
 
-    parser.parse();
+    template<typename Stream>
+    string render(Stream &s) {
+      string CSS;
+      if (!IO::read_str_from_file("../static/" + theme +  ".css", CSS)) {
+        std::cout << "fail to load css\n";
+        return "";
+      }
 
-    string HTMLBody;
-    for (auto &&STNode : parser.article) {
-      HTMLBody += STNode->accept(render) + "\n";
+      string HTML;
+      if (!IO::read_str_from_file("../static/base.html", HTML)) {
+        std::cout << "fail to load HTML\n";
+        return "";
+      }
+
+      Parser parser([&s]() -> int {return s.get_char();});
+      Render *render = new Render();
+
+      parser.parse();
+
+      string HTMLBody;
+      for (auto &&STNode : parser.article) {
+        HTMLBody += STNode->accept(render) + "\n";
+      }
+
+      std::regex CSSLabel("\\{%style%\\}");
+      std::regex BodyLabel("\\{%body%\\}");
+
+      HTML = std::regex_replace(HTML, CSSLabel, CSS); // insert CSS stylesheet
+      HTML = std::regex_replace(HTML, BodyLabel, HTMLBody); // insert HTML of markdown
+
+      return HTML;
     }
-
-    return HTMLPrefix + HTMLBody + HTMLPostfix;
-  }
+  };
 
 } // namespace md
