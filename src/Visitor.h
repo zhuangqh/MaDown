@@ -21,6 +21,8 @@ namespace md {
 
     VISITOR_VISIT_DECL(Image);
 
+    VISITOR_VISIT_DECL(Code);
+
     VISITOR_VISIT_DECL(TopText);
   };
 

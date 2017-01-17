@@ -17,6 +17,8 @@ namespace md {
 
     unique_ptr<STNode> parse_image();
 
+    unique_ptr<Code> parse_code_block();
+
     vector<unique_ptr<Text>> parse_line();
 
     void next_token();

@@ -20,6 +20,8 @@ namespace md {
 
   STNODE_ACCEPT_VISITOR_IMPL(Image);
 
+  STNODE_ACCEPT_VISITOR_IMPL(Code);
+
   STNODE_ACCEPT_VISITOR_IMPL(TopText);
 
 }

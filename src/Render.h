@@ -20,6 +20,8 @@ namespace md {
 
     RENDER_VISIT_DECL(Image);
 
+    RENDER_VISIT_DECL(Code);
+
     RENDER_VISIT_DECL(TopText);
   };
 

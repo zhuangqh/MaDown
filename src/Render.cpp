@@ -57,6 +57,23 @@ namespace md {
     return "<div><img src=\"" + p->link + "\"><p>" + p->text + "</p></div>";
   }
 
+  string Render::visit(Code *p) {
+    bool isFirst = true;
+    string codeType;
+    string text;
+
+    for (auto &item : p->elements) {
+      if (isFirst) {
+        codeType = item;
+        isFirst = false;
+      } else {
+        text += item + "\n";
+      }
+    }
+
+    return "<pre class=\"" + codeType + "\">" + text + "</pre>";
+  }
+
   string Render::visit(TopText *p) {
     string content;
 

@@ -29,6 +29,9 @@ namespace md {
         case TOK_IMAGE:
           block = parse_image();
           break;
+        case TOK_CODE:
+          block = parse_code_block();
+          break;
         default:
           block = make_unique<TopText>(parse_line());
       }
@@ -186,6 +189,27 @@ namespace md {
     } else {
       return make_unique<Image>(link, text);
     }
+  }
+
+  unique_ptr<Code> Parser::parse_code_block() {
+    next_token(); // eat '```'
+
+    vector<string> elements;
+    string strBuf;
+
+    while (nextToken != TOK_EOF) {
+      if (curToken == TOK_CODE) {
+        break;
+      } else if (curToken == TOK_EOL) {
+        elements.push_back(strBuf);
+        strBuf.clear();
+      } else {
+        strBuf += strBuffer;
+      }
+      next_token();
+    }
+
+    return make_unique<Code>(elements);
   }
 
 } // namespace md

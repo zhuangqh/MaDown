@@ -80,6 +80,14 @@ namespace md {
     STNODE_ACCEPT_VISITOR_DECL();
   };
 
+  struct Code : public STNode {
+    vector<string> elements;
+
+    Code(const vector<string> &ele) : elements(ele) {}
+
+    STNODE_ACCEPT_VISITOR_DECL();
+  };
+
   struct TopText : public STNode {
     vector<unique_ptr<Text>> elements;
 
