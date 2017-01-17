@@ -15,6 +15,8 @@ namespace md {
 
     unique_ptr<Text> parse_emphasis();
 
+    unique_ptr<Text> parse_quote();
+
     unique_ptr<STNode> parse_image();
 
     vector<unique_ptr<Text>> parse_line();

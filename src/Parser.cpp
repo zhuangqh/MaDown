@@ -51,6 +51,9 @@ namespace md {
         case TOK_EMPHASIS:
           textPtr = parse_emphasis();
           break;
+        case TOK_QUOTE:
+          textPtr = parse_quote();
+          break;
         default:
           textPtr = make_unique<Text>(Style::NORMAL, strBuffer);
       }
@@ -140,6 +143,22 @@ namespace md {
 
     if (curToken == TOK_EMPHASIS) {
       return make_unique<Text>(Style::BOLD, strBuf);
+    } else {
+      return make_unique<Text>(Style::NORMAL, strBuf);
+    }
+  }
+
+  unique_ptr<Text> Parser::parse_quote() {
+    string strBuf;
+
+    next_token();
+    while (curToken != TOK_QUOTE && nextToken != TOK_EOF && nextToken != TOK_EOL) {
+      strBuf += strBuffer;
+      next_token();
+    }
+
+    if (curToken == TOK_QUOTE) {
+      return make_unique<Text>(Style::QUOTE, strBuf);
     } else {
       return make_unique<Text>(Style::NORMAL, strBuf);
     }

@@ -5,6 +5,8 @@ namespace md {
   string Render::visit(Text *p) {
     if (p->style == Style::BOLD) {
       return "<b>" + p->text + "</b>";
+    } else if (p->style == Style::QUOTE) {
+      return "<code>" + p->text + "</code>";
     } else {
       return p->text;
     }

@@ -15,7 +15,7 @@ namespace md {
   struct Visitor;
 
   enum Style {
-    NORMAL, BOLD, ITALIC
+    NORMAL, BOLD, ITALIC, QUOTE
   };
 
   struct STNode {
