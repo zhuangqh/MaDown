@@ -49,10 +49,13 @@ namespace md {
           isEnd = true;
           break;
         case TOK_EMPHASIS:
-          textPtr = parse_emphasis();
+          textPtr = parse_formatted_text(TOK_EMPHASIS, Style::BOLD);
           break;
         case TOK_QUOTE:
-          textPtr = parse_quote();
+          textPtr = parse_formatted_text(TOK_QUOTE, Style::QUOTE);
+          break;
+        case TOK_ITALIC:
+          textPtr = parse_formatted_text(TOK_ITALIC, Style::ITALIC);
           break;
         default:
           textPtr = make_unique<Text>(Style::NORMAL, strBuffer);
@@ -132,33 +135,17 @@ namespace md {
     }
   }
 
-  unique_ptr<Text> Parser::parse_emphasis() {
+  unique_ptr<Text> Parser::parse_formatted_text(int token, Style textStyle) {
     string strBuf;
 
     next_token();
-    while (curToken != TOK_EMPHASIS && nextToken != TOK_EOF && nextToken != TOK_EOL) {
+    while (curToken != token && nextToken != TOK_EOF && nextToken != TOK_EOL) {
       strBuf += strBuffer;
       next_token();
     }
 
-    if (curToken == TOK_EMPHASIS) {
-      return make_unique<Text>(Style::BOLD, strBuf);
-    } else {
-      return make_unique<Text>(Style::NORMAL, strBuf);
-    }
-  }
-
-  unique_ptr<Text> Parser::parse_quote() {
-    string strBuf;
-
-    next_token();
-    while (curToken != TOK_QUOTE && nextToken != TOK_EOF && nextToken != TOK_EOL) {
-      strBuf += strBuffer;
-      next_token();
-    }
-
-    if (curToken == TOK_QUOTE) {
-      return make_unique<Text>(Style::QUOTE, strBuf);
+    if (curToken == token) {
+      return make_unique<Text>(textStyle, strBuf);
     } else {
       return make_unique<Text>(Style::NORMAL, strBuf);
     }

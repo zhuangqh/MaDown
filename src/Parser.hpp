@@ -13,9 +13,7 @@ namespace md {
 
     unique_ptr<STNode> parse_link();
 
-    unique_ptr<Text> parse_emphasis();
-
-    unique_ptr<Text> parse_quote();
+    unique_ptr<Text> parse_formatted_text(int token, Style textStyle);
 
     unique_ptr<STNode> parse_image();
 

@@ -7,6 +7,8 @@ namespace md {
       return "<b>" + p->text + "</b>";
     } else if (p->style == Style::QUOTE) {
       return "<code>" + p->text + "</code>";
+    } else if (p->style == Style::ITALIC) {
+      return "<em>" + p->text + "</em>";
     } else {
       return p->text;
     }
