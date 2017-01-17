@@ -32,7 +32,7 @@ namespace md {
 
       if (fs.good()) {
         std::stringstream sstr;
-        sstr << fs.rdbuf();
+        sstr << fs.rdbuf(); // will be faster than reading line by line
         res = sstr.str();
         fs.close();
         return true;
